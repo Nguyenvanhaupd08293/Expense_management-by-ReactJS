@@ -20,12 +20,12 @@ const HomePage = () => {
        <>
        <div className="p-4 space-y-4">
       <div className="grid grid-cols-4 gap-4">
-        <Card title="Khoản đầu tư" value="65841" increase="10%" bgColor="bg-purple-500" />
-        <Card title="Khoản thu hồi" value="52142" increase="5.6%" bgColor="bg-blue-500" />
-        <Card title="Khoản chi hàng tháng" value="2365" increase="7.02%" bgColor="bg-pink-500" />
-        <Card title="Khoản dự trữ" value="854" increase="9.9%" bgColor="bg-green-500" />
+        <Card title="Khoản đầu tư" value="65841$" increase="10%" bgColor="bg-purple-500" />
+        <Card title="Khoản thu hồi" value="52142$" increase="5.6%" bgColor="bg-blue-500" />
+        <Card title="Khoản chi hàng tháng" value="2365$" increase="7.02%" bgColor="bg-pink-500" />
+        <Card title="Khoản dự trữ" value="854$" increase="9.9%" bgColor="bg-green-500" />
       </div>
-      {/* Add charts and other components here */}
+
     </div>
     <div className="p-6 mt-5 bg-white rounded-lg shadow-lg ">
       <h2 className="mb-4 text-xl font-bold">Thống kê chi tiêu</h2>

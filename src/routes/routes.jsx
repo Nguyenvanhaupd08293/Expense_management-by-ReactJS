@@ -5,13 +5,26 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import SpendCate from '../pages/spending/component/SpendCate';
 import NotFoundPage from '../pages/notfound/NotFound';
 import IncomeCate from '../pages/spending/component/IncomeCate';
-
-// Define the clientRouter array with routes
+import Login from '../layouts/auth/login';
+import Register from '../layouts/auth/register';
+import chartAll from '../pages/chart/chartAll';
+import listSpend from '../pages/spending/Spendcate/listSpend';
+import listIncome from '../pages/spending/Incomecate/listIncome';
 const clientRouter = [
   {
     path: '/statistic',
     element: SpendCate,
     title: 'Báo cáo thống kê',
+  },
+  {
+    path: '/listspend',
+    element: listSpend,
+    title: 'thống kê khoản chi',
+  },
+  {
+    path: '/listincome',
+    element: listIncome,
+    title: 'thông kê khoản thu',
   },
   {
     path: '/spending',
@@ -23,6 +36,21 @@ const clientRouter = [
     element: HomePage,
     title: 'Trang chủ',
   },
+  {
+    path: '/login',
+    element: Login,
+    title: 'Đăng nhập',
+  },
+  {
+    path: '/register',
+    element: Register,
+    title: 'Đăng ký',
+  },
+  {
+    path: '/chart',
+    element: chartAll,
+    title: 'Biểu đồ',
+  },
 ];
 
 export default function AppRouter() {
@@ -30,11 +58,11 @@ export default function AppRouter() {
 
   useEffect(() => {
     const route = clientRouter.find(route => {
-      const routePath = route.path.replace(/:\w+/g, ''); // Remove dynamic segments
-      return location.pathname.startsWith(routePath);
+      const routePath = route.path.replace(/:\w+/g, ''); // Loại bỏ các đoạn động
+      return location.pathname.startsWith(routePath);  // Kiểm tra đường dẫn hiện tại có bắt đầu bằng đường dẫn của route không
     });
     if (route && route.title) {
-      document.title = route.title;
+      document.title = route.title;  // Thiết lập tiêu đề của trang dựa trên route được chọn
     }
   }, [location]);
 
@@ -45,7 +73,7 @@ export default function AppRouter() {
           <Route key={route.path} path={route.path} element={<route.element />} />
         ))}
       </Route>
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />  // Route này xử lý khi không có route nào khớp
     </Routes>
   );
 }

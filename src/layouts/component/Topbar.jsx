@@ -1,14 +1,11 @@
 import React from 'react';
-
+import Search from '../../components/search/Search';
+import { Link } from 'react-router-dom';
 const Topbar = () => {
   return (
     <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-lg">
       <div className="flex items-center">
-        <input 
-          type="text" 
-          placeholder="Type to search..." 
-          className="px-4 py-2 border border-gray-300 rounded-lg"
-        />
+        <Search/>
       </div>
       <div className="flex items-center space-x-4">
         <button className="relative">
@@ -29,13 +26,13 @@ const Topbar = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6" />
           </svg>
         </button>
-        <div className="flex items-center">
+        <Link to="/login" className="flex items-center">
           <img src="https://s120-ava-talk.zadn.vn/b/c/5/6/11/120/a2ae5f1e691355dc2c766a5824c6cafb.jpg" alt="User Avatar" className="w-10 h-10 rounded-full" />
           <div className="ml-2">
-            <p className="text-sm font-medium text-gray-700">Thomas Anree</p>
-            <p className="text-xs text-gray-500">UX Designer</p>
+            <p className="text-sm font-medium text-gray-700">Đăng nhập</p>
+            <p className="text-xs text-gray-500">User</p>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
