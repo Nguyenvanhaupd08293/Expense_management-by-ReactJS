@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
-import { FetchTypeSpendList} from '../../../redux/action/categorySpend';
-import { FunctionAddSpend } from '../../../redux/action/Spending';
+import { FetchTypeSpendList } from '../../../redux/action/categorySpend';
+import { FetchSpendObj, FunctionUpdateSpend } from '../../../redux/action/Spending';
 import { toast, ToastContainer } from 'react-toastify';
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { ListPaymentmethod } from '../../../redux/action/payment_method';
-const SpendCate = (props) => {
+
+const EditSpend = (props) => {  // Thêm props vào đây
   const [selected, setSelected] = useState(null);
   const [amount, setamount] = useState('');
   const [date, setDate] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
-
-  useEffect(() => {
-    props.loadSpendList();  
-    props.loadPaymentMethods();// Tải phương thức thanh toán
-  }, []);
-
+  const { id } = useParams();
+  const userobj = useSelector((state) => state.spend.spendobj);
   const handleSelect = (id) => {
     setSelected(id);
   };
@@ -25,34 +22,49 @@ const SpendCate = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selected || !amount || !date) {  
+    if (!selected || !amount || !date) {
       toast.error('Please fill out all fields');
       return;
     }
-    const userObj = { selected, amount, date, paymentMethod };
-    dispatch(FunctionAddSpend(userObj));
+    const userObj = { id, selected, amount, date, paymentMethod };
+    dispatch(FunctionUpdateSpend(userObj, id));
     console.log('Submitting:', userObj);
-    toast.success('Expense added successfully');
+    toast.success('Expense updated successfully');
     setTimeout(() => {
       navigate('/listspend');
-    }, 2000);
+    }, 5000);
   }
+
+  useEffect(() => {
+    dispatch(FetchSpendObj(id));
+    props.loadSpendList();  // Sử dụng props
+    props.loadPaymentMethods();  // Sử dụng props
+  }, []);
+
+  useEffect(() => {
+    if (userobj) {
+      setSelected(userobj.selected);
+      setamount(userobj.amount);
+      setDate(userobj.date);
+      setPaymentMethod(userobj.paymentMethod);
+    }
+  }, [userobj]);
 
   return (
     <>
       <div className="grid grid-cols-4 gap-3 mt-3">
-        {props.categorySpend.typespendlist && props.categorySpend.typespendlist.map(item => (
+        {props.categorySpend.typespendlist && props.categorySpend.typespendlist.map(item => (  // Sử dụng props
           <div
             key={item.id_categorySpend}
             className={`flex flex-col items-center border-2 rounded-md cursor-pointer bg-white transition-all ease-linear p-2 gap-1 ${selected === item.id_categorySpend ? 'border-primary' : 'border-borderColor hover:border-primary'}`}
-            onClick={() => handleSelect(item.id_categorySpend)}
+            onClick={() => handleSelect(item.id_categorySpend || '')}
           >
             <img src={item.icon_spend} alt={`icon ${item.category_name}`} className="w-16 h-16" />
-            <span className="uppercase">{item.category_name}
-            </span>
+            <span className="uppercase">{item.category_name}</span>
           </div>
         ))}
       </div>
+
       <div className="flex justify-center items-center pt-4">
         <form className="w-full max-w-lg" onSubmit={handleSubmit}>
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -65,7 +77,7 @@ const SpendCate = (props) => {
                 id="grid-first-name"
                 type="number"
                 placeholder="amount"
-                value={amount}
+                value={amount || ''}
                 onChange={(e) => setamount(e.target.value)}
               />
             </div>
@@ -80,7 +92,7 @@ const SpendCate = (props) => {
                 id="grid-date"
                 type="date"
                 placeholder="date"
-                value={date}
+                value={date || ''}
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
@@ -94,11 +106,11 @@ const SpendCate = (props) => {
                 <select
                   className="block appearance-none w-full bg-white border border-gray-200 text-gray-500 py-3 px-4 pr-8 rounded leading-tight focus:outline-none hover:bg-white focus:border-red-600"
                   id="grid-state"
-                  value={paymentMethod}
+                  value={paymentMethod || ''}
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 >
-                  {props.paymentmethod.paymentlist && props.paymentmethod.paymentlist.map(item => (
-                    <option key={item.id} value={item.id}>{item.type_payment_method}</option>
+                  {props.paymentmethod.paymentlist && props.paymentmethod.paymentlist.map(item => (  // Sử dụng props
+                    <option key={item.id} value={item.id || ''}>{item.type_payment_method}</option>
                   ))}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -136,4 +148,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpendCate);
+export default connect(mapStateToProps, mapDispatchToProps)(EditSpend);

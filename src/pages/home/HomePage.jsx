@@ -1,4 +1,6 @@
 import React from 'react';
+import IncomeCate from '../chart/chartIncomeCate';
+import Spend from '../chart/chartSpendingcate';
 const data = [
   { source: "Google", visitors: "3.5K", revenues: "$5,768", sales: 590, conversion: "4.8%", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" },
   { source: "Twitter", visitors: "2.2K", revenues: "$4,635", sales: 467, conversion: "4.3%", logo: "https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_as_of_2021.svg" },
@@ -29,31 +31,14 @@ const HomePage = () => {
     </div>
     <div className="p-6 mt-5 bg-white rounded-lg shadow-lg ">
       <h2 className="mb-4 text-xl font-bold">Thống kê chi tiêu</h2>
-      <table className="w-full table-auto">
-        <thead>
-          <tr className="text-left text-gray-500 border-b">
-            <th className="pb-2">Khoản chi</th>
-            <th className="pb-2">Học tập</th>
-            <th className="pb-2">Đầu tư</th>
-            <th className="pb-2">Mua sắm</th>
-            <th className="pb-2">Thức ăn</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <tr key={index} className="border-b">
-              <td className="py-2 flex items-center">
-                <img src={item.logo} alt={`${item.source} logo`} className="w-6 h-6 mr-2"/>
-                {item.source}
-              </td>
-              <td className="py-2">{item.visitors}</td>
-              <td className="py-2 text-green-500">{item.revenues}</td>
-              <td className="py-2">{item.sales}</td>
-              <td className="py-2 text-blue-500">{item.conversion}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className='flex justify-between '>
+          <div className='w-1/2 pr-2'>
+            <IncomeCate />
+          </div>
+          <div className='w-1/2 pl-2'>
+            <Spend />
+          </div>
+        </div>
     </div>
     </>
   );

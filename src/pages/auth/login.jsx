@@ -1,27 +1,51 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Register =()=>{
+import { useState} from 'react';
+import { useDispatch } from "react-redux";
+import { Link,useNavigate} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FunctionLogin } from '../../redux/action/admin';
+const Login =()=>{
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            toast.error('Vui lòng điền đầy đủ thông tin');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await dispatch(FunctionLogin(email,password));
+            toast.success('Đăng nhập thành công');
+            navigate('/homepage');
+        } catch (error) {
+            toast.error('Đăng nhập không đúng');
+        } finally {
+            setLoading(false);
+        }
+    }
 return(
        <>
-    <div className="min-h-screen flex items-center justify-center">
+       <form onSubmit={handleSubmit}>
+    <div className="min-h-screen flex items-center justify-center ">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create your an account</h2>
-        <form>
+        <h2 className="text-2xl font-bold mb-6 text-center">Sigin your Account</h2>
           <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="email">Your email</label>
-            <input type="email" id="email" className="w-full px-3 py-2 border rounded-lg" placeholder="name@company.com" required />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="email">Your username</label>
-            <input type="email" id="email" className="w-full px-3 py-2 border rounded-lg" placeholder="Your username" required />
+            <input value={email} type='email' onChange={e => setEmail(e.target.value)} className="w-full px-3 py-2 border rounded-lg" placeholder="name@company.com" required />
           </div>
           <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-700" htmlFor="password">Password</label>
-            <input type="password" id="password" className="w-full px-3 py-2 border rounded-lg" placeholder="••••••••" required />
-          </div>
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">Create an account</button>
-        </form>
-        <p className="text-center mt-4">Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Sign in here</Link></p>
+            <input type="password" id="password" name='password' value={password} onChange={e => setPassword(e.target.value)} className="w-full px-3 py-2 border rounded-lg" placeholder="••••••••" required />
+            </div>
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">Sign in</button>
+        <p className="text-center mt-4">Already have an account? <Link to="/register" className="text-blue-600 hover:underline">Sign up here</Link></p>
         <div class="mt-6">
                 <div class="relative">
                     <div class="absolute inset-0 flex items-center">
@@ -59,7 +83,9 @@ return(
             </div>
       </div>
     </div>
+            </form>
+    <ToastContainer />
        </>
 )
 }
-export default Register;
+export default Login;
