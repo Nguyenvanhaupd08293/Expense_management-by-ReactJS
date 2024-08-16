@@ -81,7 +81,7 @@ const ListIncome = (props) => {
                                                     {item.category_spend_name}
                                                 </div>
                                             </th>
-                                            <td className="px-4 py-3">$_{item.amount}.M</td>
+                                            <td className="px-4 py-3">$_{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                             <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <div className="flex items-center">
                                                     <div className="h-4 w-4 rounded-full inline-block mr-2 "></div>

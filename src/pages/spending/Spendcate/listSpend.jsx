@@ -6,17 +6,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FetchSpendList, RemoveSpend } from "../../../redux/action/Spending";
 
 const ListSpend = (props) => {
-    useEffect(() => {
+   useEffect(() => {
+    //  Hook useEffect để Gọi hàm loadspend để tải danh sách chi tiêu từ props
+    props.loadspend();
+}, []);
+
+// Hàm xử lý sự kiện khi xóa một mục chi tiêu
+const handleDelete = (id) => {
+    // Hiển thị hộp thoại xác nhận trước khi xóa
+    if (window.confirm('Bạn có chắc chắn muốn xóa không?')) {
+        // Gọi hàm removespend từ props để xóa mục chi tiêu theo id
+        props.removespend(id);
+        // Tải lại danh sách chi tiêu sau khi xóa
         props.loadspend();
-    }, []);
-
-    const handleDelete = (id) => {
-        if (window.confirm('Do you want to remove?')) {
-            props.removespend(id);
-            props.loadspend();
-        }
-    };
-
+    }
+};
     return (
         <>
             <div className="p-6 mt-5 bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg">
@@ -52,14 +56,14 @@ const ListSpend = (props) => {
                                 <tr>
                                     <th scope="col" className="p-4">
                                         <div className="flex items-center">
-                                            <span>STT</span>
+                                            <span></span>
                                         </div>
                                     </th>
                                     <th scope="col" className="p-4">Khoản chi</th>
                                     <th scope="col" className="p-4">Giá chi</th>
                                     <th scope="col" className="p-4">Hình thức chi</th>
                                     <th scope="col" className="p-4">Ngày chi</th>
-                                    <th scope="col" className="p-4">Last Update</th>
+                                    <th scope="col" className="p-4"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,7 +72,7 @@ const ListSpend = (props) => {
                                         <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700" key={item.id}>
                                             <td className="p-4 w-4">
                                                 <div className="flex items-center">
-                                                    <span>{item.id}</span>
+                                                    <span></span>
                                                 </div>
                                             </td>
                                             <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -81,7 +85,7 @@ const ListSpend = (props) => {
                                                     {item.category_spend_name}
                                                 </div>
                                             </th>
-                                            <td className="px-4 py-3">$_{item.amount}.M</td>
+                                            <td className="px-4 py-3">$_{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                                             <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <div className="flex items-center">
                                                     <div className="h-4 w-4 rounded-full inline-block mr-2 "></div>

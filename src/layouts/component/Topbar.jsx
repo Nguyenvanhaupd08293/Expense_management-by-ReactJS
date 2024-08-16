@@ -4,14 +4,19 @@
             import { useEffect,useState } from 'react';
             import Cookies from 'js-cookie'
             const Topbar = () => {
-              const [username, setUsername] = useState(Cookies.get('username') || '');
-              const isLoggedIn = !Cookies.get('token');
-              useEffect(() => {
-                const username = Cookies.get('username');
-                if (username) {
-                  setUsername(username);
-              }
-            }, []);
+  // Thiết lập giá trị ban đầu của username từ cookie
+  const [username, setUsername] = useState(Cookies.get('username') || '');
+
+  // Kiểm tra xem người dùng có đăng nhập không
+  const isLoggedIn = !Cookies.get('token');
+
+  useEffect(() => {
+    // Cập nhật giá trị của username từ cookie khi component được render
+    const storedUsername = Cookies.get('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }   
+  }, []);
               return (
                 <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-lg">
                   <div className="flex items-center">
@@ -49,5 +54,4 @@
                 </div>
               );
             }
-
             export default Topbar;

@@ -70,7 +70,7 @@ const IncomeCate=()=> {
       </div>
       <div className="flex justify-center mt-6">
         <span className="text-2xl font-bold">Khoản thu nhập:</span>
-        <span className="font-normal mt-1.5 ml-1">${totalAmount.toFixed(2)}</span>
+        <span className="font-normal mt-1.5 ml-1">${totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span>
       </div>
     </div>
   );

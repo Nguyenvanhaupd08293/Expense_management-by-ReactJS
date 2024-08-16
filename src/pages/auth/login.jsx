@@ -8,7 +8,6 @@ import { FunctionLogin } from '../../redux/action/admin';
 const Login =()=>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -19,16 +18,13 @@ const Login =()=>{
             return;
         }
 
-        setLoading(true);
         try {
             await dispatch(FunctionLogin(email,password));
             toast.success('Đăng nhập thành công');
             navigate('/homepage');
         } catch (error) {
             toast.error('Đăng nhập không đúng');
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 return(
        <>

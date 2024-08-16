@@ -17,7 +17,7 @@ const Sidebar = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white w-64">
       <div className="p-6 sticky z-40 top-0">
-        <Link to="/" className="text-2xl font-bold mb-6 hover:text-white">Quản lý chi tiêu</Link>
+        <Link to="/homepage" className="text-2xl font-bold mb-6 hover:text-white">Quản lý chi tiêu</Link>
         <ul className="p-6 mt-10">
           <li className="mb-2">
             <Link to="/homepage" className="flex items-center p-2 text-gray-400 hover:bg-gray-700 hover:text-white rounded-lg">

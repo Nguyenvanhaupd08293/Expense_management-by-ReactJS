@@ -30,7 +30,7 @@ const HomePage = () => {
 
     </div>
     <div className="p-6 mt-5 bg-white rounded-lg shadow-lg ">
-      <h2 className="mb-4 text-xl font-bold">Thống kê chi tiêu</h2>
+      <h2 className="mb-4 text-xl font-bold">Thống kê chi tiêu trong tuần</h2>
       <div className='flex justify-between '>
           <div className='w-1/2 pr-2'>
             <IncomeCate />
